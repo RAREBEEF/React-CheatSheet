@@ -858,6 +858,11 @@ export default class Component extends React.Component {
 
 # **React Router**
 
+- 추가 / 수정 사항
+    1. <Route> 는 <Routes> 로 묶어야한다.
+    2. <Route> 에서 컴포넌트 지정은 `component` 가 아닌 `element={}` 로 이루어진다.
+    3. 컴포넌트 지정시 JSX 문법을 사용한다. ex) `element={<Component />}`
+
 - **기존의 웹 라우팅 과정**
 
   1. 서버에 "/" 경로 요청  
