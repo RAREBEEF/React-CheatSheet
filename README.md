@@ -2212,6 +2212,36 @@ export default function UseMemo() {
   };
 };
 ```
+        
+이는 컴포넌트에도 적용이 가능하다. 부모 컴포넌트의 state가 변경될 때 그 자식으로 들어있는 컴포넌트도 전부 리렌더링 되는데, 이 때 자식 컴포넌트들에 `memo` 를 적용시켰을 경우 자신에게 해당하는 props가 수정되기 전까지는 리렌더링 되지 않는다.
+```js
+function Btn({text, onClick}) {
+  return (
+    <button
+      onClick={onClick}
+    >
+      {text}
+    </button>
+  );
+};
+
+const MemorizedBtn = React.memo(btn);
+        
+function App() {
+  const [value, setValue] = React.useState("Hello, World!");
+  const changeValue = () => setValue("Hello, React!");
+        
+  return (
+    <div>
+      <MemorizedBtn text={value} onClick={changeValue} />
+      <MemorizedBtn text="Hello, world!" />
+    </div>
+  )
+};
+```
+위 예시에서 두 Btn은 둘 다 text prop을 갖고 있다.
+첫번째 btn이 부모 요소의 state를 변경시켰을 때 첫번째 btn의 prop에서는 변경이 일어나 다시 렌더링된다.
+하지만 두번째 btn의 prop은 변경사항이 없기 때문에 부모의 state가 변경되었어도 다시 렌더링이 발생하지 않는다.
 
 ### **useCallback**
 `useCallback` 은 지정한 곳에서 변경점이 발생하기 전까지는 이전의 내용을 기억하고 실행하는 훅이다. 컴포넌트의 최적화에 있어서 중요한 역할을 한다. 
